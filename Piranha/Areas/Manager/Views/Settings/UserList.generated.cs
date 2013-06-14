@@ -28,9 +28,9 @@ namespace Piranha.Areas.Manager.Views.Settings
     using System.Web.WebPages;
     using Piranha.Web;
     
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "1.5.4.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Areas/Manager/Views/Settings/UserList.cshtml")]
-    public partial class UserList : System.Web.Mvc.WebViewPage<Piranha.Models.Manager.SettingModels.UserListModel>
+    public partial class UserList : System.Web.Mvc.WebViewPage<Piranha.Manager.Models.UserListModel>
     {
         public UserList()
         {
@@ -82,14 +82,14 @@ WriteLiteral(" id=\"add\"");
 
 WriteLiteral("><a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 575), Tuple.Create("\"", 601)
+WriteAttribute("href", Tuple.Create(" href=\"", 561), Tuple.Create("\"", 587)
             
             #line 19 "..\..\Areas\Manager\Views\Settings\UserList.cshtml"
-, Tuple.Create(Tuple.Create("", 582), Tuple.Create<System.Object, System.Int32>(Url.Action("user")
+, Tuple.Create(Tuple.Create("", 568), Tuple.Create<System.Object, System.Int32>(Url.Action("user")
             
             #line default
             #line hidden
-, 582), false)
+, 568), false)
 );
 
 WriteLiteral(" class=\"add\"");
@@ -105,14 +105,14 @@ WriteLiteral(">");
             #line hidden
 WriteLiteral("</a></li>\r\n            <li><a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 680), Tuple.Create("\"", 710)
+WriteAttribute("href", Tuple.Create(" href=\"", 666), Tuple.Create("\"", 696)
             
             #line 20 "..\..\Areas\Manager\Views\Settings\UserList.cshtml"
-, Tuple.Create(Tuple.Create("", 687), Tuple.Create<System.Object, System.Int32>(Url.Action("userlist")
+, Tuple.Create(Tuple.Create("", 673), Tuple.Create<System.Object, System.Int32>(Url.Action("userlist")
             
             #line default
             #line hidden
-, 687), false)
+, 673), false)
 );
 
 WriteLiteral(" class=\"refresh\"");
@@ -268,68 +268,32 @@ WriteLiteral("            <tr>\r\n                <td");
 
 WriteLiteral(" class=\"gravatar\"");
 
-WriteLiteral(">\r\n");
+WriteLiteral("><img");
 
+WriteAttribute("src", Tuple.Create(" src=\"", 1792), Tuple.Create("\"", 1815)
             
-            #line 45 "..\..\Areas\Manager\Views\Settings\UserList.cshtml"
-                    
+            #line 44 "..\..\Areas\Manager\Views\Settings\UserList.cshtml"
+, Tuple.Create(Tuple.Create("", 1798), Tuple.Create<System.Object, System.Int32>(user.GravatarUrl
             
             #line default
             #line hidden
-            
-            #line 45 "..\..\Areas\Manager\Views\Settings\UserList.cshtml"
-                     if (!String.IsNullOrEmpty(user.Email)) {
-
-            
-            #line default
-            #line hidden
-WriteLiteral("                        <img");
-
-WriteAttribute("src", Tuple.Create(" src=\"", 1895), Tuple.Create("\"", 1936)
-            
-            #line 46 "..\..\Areas\Manager\Views\Settings\UserList.cshtml"
-, Tuple.Create(Tuple.Create("", 1901), Tuple.Create<System.Object, System.Int32>(Url.GetGravatarUrl(user.Email, 30)
-            
-            #line default
-            #line hidden
-, 1901), false)
+, 1798), false)
 );
 
-WriteAttribute("alt", Tuple.Create(" alt=\"", 1937), Tuple.Create("\"", 1967)
-, Tuple.Create(Tuple.Create("", 1943), Tuple.Create("Gravatar", 1943), true)
-, Tuple.Create(Tuple.Create(" ", 1951), Tuple.Create("for", 1952), true)
-            
-            #line 46 "..\..\Areas\Manager\Views\Settings\UserList.cshtml"
-        , Tuple.Create(Tuple.Create(" ", 1955), Tuple.Create<System.Object, System.Int32>(user.Email
-            
-            #line default
-            #line hidden
-, 1956), false)
-);
-
-WriteLiteral(" />\r\n");
-
-            
-            #line 47 "..\..\Areas\Manager\Views\Settings\UserList.cshtml"
-                    }
-
-            
-            #line default
-            #line hidden
-WriteLiteral("                </td>\r\n                <td");
+WriteLiteral(" /></td>\r\n                <td");
 
 WriteLiteral(" class=\"login\"");
 
 WriteLiteral(">\r\n");
 
             
-            #line 50 "..\..\Areas\Manager\Views\Settings\UserList.cshtml"
+            #line 46 "..\..\Areas\Manager\Views\Settings\UserList.cshtml"
                     
             
             #line default
             #line hidden
             
-            #line 50 "..\..\Areas\Manager\Views\Settings\UserList.cshtml"
+            #line 46 "..\..\Areas\Manager\Views\Settings\UserList.cshtml"
                      if (User.IsMember(user.GroupId)) {
 
             
@@ -337,20 +301,20 @@ WriteLiteral(">\r\n");
             #line hidden
 WriteLiteral("                    <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 2134), Tuple.Create("\"", 2182)
+WriteAttribute("href", Tuple.Create(" href=\"", 1941), Tuple.Create("\"", 1989)
             
-            #line 51 "..\..\Areas\Manager\Views\Settings\UserList.cshtml"
-, Tuple.Create(Tuple.Create("", 2141), Tuple.Create<System.Object, System.Int32>(Url.Action("user", new { id = user.Id })
+            #line 47 "..\..\Areas\Manager\Views\Settings\UserList.cshtml"
+, Tuple.Create(Tuple.Create("", 1948), Tuple.Create<System.Object, System.Int32>(Url.Action("user", new { id = user.Id })
             
             #line default
             #line hidden
-, 2141), false)
+, 1948), false)
 );
 
 WriteLiteral(">");
 
             
-            #line 51 "..\..\Areas\Manager\Views\Settings\UserList.cshtml"
+            #line 47 "..\..\Areas\Manager\Views\Settings\UserList.cshtml"
                                                                    Write(user.Login);
 
             
@@ -359,21 +323,21 @@ WriteLiteral(">");
 WriteLiteral("</a>\r\n");
 
             
-            #line 52 "..\..\Areas\Manager\Views\Settings\UserList.cshtml"
+            #line 48 "..\..\Areas\Manager\Views\Settings\UserList.cshtml"
                     } else {
                     
             
             #line default
             #line hidden
             
-            #line 53 "..\..\Areas\Manager\Views\Settings\UserList.cshtml"
+            #line 49 "..\..\Areas\Manager\Views\Settings\UserList.cshtml"
                Write(user.Login);
 
             
             #line default
             #line hidden
             
-            #line 53 "..\..\Areas\Manager\Views\Settings\UserList.cshtml"
+            #line 49 "..\..\Areas\Manager\Views\Settings\UserList.cshtml"
                                
                     }
 
@@ -387,17 +351,8 @@ WriteLiteral(" class=\"name\"");
 WriteLiteral(">");
 
             
-            #line 56 "..\..\Areas\Manager\Views\Settings\UserList.cshtml"
-                            Write(user.Firstname);
-
-            
-            #line default
-            #line hidden
-WriteLiteral(" ");
-
-            
-            #line 56 "..\..\Areas\Manager\Views\Settings\UserList.cshtml"
-                                            Write(user.Surname);
+            #line 52 "..\..\Areas\Manager\Views\Settings\UserList.cshtml"
+                            Write(user.Name);
 
             
             #line default
@@ -409,7 +364,7 @@ WriteLiteral(" class=\"group\"");
 WriteLiteral(">");
 
             
-            #line 57 "..\..\Areas\Manager\Views\Settings\UserList.cshtml"
+            #line 53 "..\..\Areas\Manager\Views\Settings\UserList.cshtml"
                              Write(user.GroupName);
 
             
@@ -422,7 +377,7 @@ WriteLiteral(" class=\"updated\"");
 WriteLiteral(">");
 
             
-            #line 58 "..\..\Areas\Manager\Views\Settings\UserList.cshtml"
+            #line 54 "..\..\Areas\Manager\Views\Settings\UserList.cshtml"
                                Write(user.Updated.ToString("yyyy-MM-dd"));
 
             
@@ -435,7 +390,7 @@ WriteLiteral(" class=\"created\"");
 WriteLiteral(">");
 
             
-            #line 59 "..\..\Areas\Manager\Views\Settings\UserList.cshtml"
+            #line 55 "..\..\Areas\Manager\Views\Settings\UserList.cshtml"
                                Write(user.Created.ToString("yyyy-MM-dd"));
 
             
@@ -448,13 +403,13 @@ WriteLiteral(" class=\"buttons\"");
 WriteLiteral(">\r\n");
 
             
-            #line 61 "..\..\Areas\Manager\Views\Settings\UserList.cshtml"
+            #line 57 "..\..\Areas\Manager\Views\Settings\UserList.cshtml"
                     
             
             #line default
             #line hidden
             
-            #line 61 "..\..\Areas\Manager\Views\Settings\UserList.cshtml"
+            #line 57 "..\..\Areas\Manager\Views\Settings\UserList.cshtml"
                      if (User.IsMember(user.GroupId)) {
 
             
@@ -464,20 +419,20 @@ WriteLiteral("                    <a");
 
 WriteLiteral(" class=\"icon delete\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 2738), Tuple.Create("\"", 2792)
+WriteAttribute("href", Tuple.Create(" href=\"", 2526), Tuple.Create("\"", 2580)
             
-            #line 62 "..\..\Areas\Manager\Views\Settings\UserList.cshtml"
-, Tuple.Create(Tuple.Create("", 2745), Tuple.Create<System.Object, System.Int32>(Url.Action("deleteuser", new { id = user.Id })
+            #line 58 "..\..\Areas\Manager\Views\Settings\UserList.cshtml"
+, Tuple.Create(Tuple.Create("", 2533), Tuple.Create<System.Object, System.Int32>(Url.Action("deleteuser", new { id = user.Id })
             
             #line default
             #line hidden
-, 2745), false)
+, 2533), false)
 );
 
 WriteLiteral("></a>\r\n");
 
             
-            #line 63 "..\..\Areas\Manager\Views\Settings\UserList.cshtml"
+            #line 59 "..\..\Areas\Manager\Views\Settings\UserList.cshtml"
                     }
 
             
@@ -486,17 +441,13 @@ WriteLiteral("></a>\r\n");
 WriteLiteral("                </td>\r\n            </tr>\r\n");
 
             
-            #line 66 "..\..\Areas\Manager\Views\Settings\UserList.cshtml"
+            #line 62 "..\..\Areas\Manager\Views\Settings\UserList.cshtml"
             }
 
             
             #line default
             #line hidden
-WriteLiteral("        </tbody>\r\n        <tfoot>\r\n            <tr>\r\n                <td");
-
-WriteLiteral(" colspan=\"6\"");
-
-WriteLiteral("></td>\r\n            </tr>\r\n        </tfoot>\r\n    </table>\r\n</div>");
+WriteLiteral("        </tbody>\r\n    </table>\r\n</div>");
 
         }
     }

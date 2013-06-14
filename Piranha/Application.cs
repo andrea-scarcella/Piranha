@@ -35,6 +35,11 @@ namespace Piranha
 		public readonly IO.IMediaProvider MediaProvider = new IO.LocalMediaProvider() ;
 
 		/// <summary>
+		/// The current Ninject kernel.
+		/// </summary>
+		public readonly Ninject.IKernel Kernel = new Ninject.StandardKernel(new Manager.InjectionModule()) ;
+
+		/// <summary>
 		/// The currently active user provider.
 		/// </summary>
 		internal readonly Security.IUserProvider UserProvider = new Security.LocalUserProvider() ;

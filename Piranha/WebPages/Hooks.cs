@@ -140,12 +140,12 @@ namespace Piranha.WebPages
 			/// <summary>
 			/// Executed after the user list model is loaded but before the view is called.
 			/// </summary>
-			public static Delegates.ManagerModelLoadedHook<Models.Manager.SettingModels.UserListModel> UserListModelLoaded ;
+			public static Delegates.ManagerModelLoadedHook<Piranha.Manager.Models.UserListModel> UserListModelLoaded ;
 
 			/// <summary>
 			/// Executed after the user edit model is loaded but before the view is called.
 			/// </summary>
-			public static Delegates.ManagerModelLoadedHook<Models.Manager.SettingModels.UserEditModel> UserEditModelLoaded ;
+			public static Delegates.ManagerModelLoadedHook<Piranha.Manager.Models.UserEditModel> UserEditModelLoaded ;
 
 			/**
 			 * TODO

@@ -1,4 +1,4 @@
-﻿@model Piranha.Models.Manager.SettingModels.AccessListModel
+﻿@model Piranha.Manager.Models.PermissionListModel
 @{
     ViewBag.Title = @Piranha.Resources.Settings.ListTitleAccess ;
 }
@@ -42,24 +42,19 @@
             </tr>
         </thead>
         <tbody class="list-js">
-            @foreach (var access in Model.Access) {
+            @foreach (var perm in Model.Permissions) {
             <tr>
-                <td class="name"><a href="@Url.Action("access", new { id = access.Id })">@access.Function</a></td>
-                <td class="group">@access.GroupName</td>
-                <td class="updated">@access.Updated.ToString("yyyy-MM-dd")</td>
-                <td class="created">@access.Created.ToString("yyyy-MM-dd")</td>
+                <td class="name"><a href="@Url.Action("access", new { id = perm.Id })">@perm.Name</a></td>
+                <td class="group">@perm.GroupName</td>
+                <td class="updated">@perm.Updated.ToString("yyyy-MM-dd")</td>
+                <td class="created">@perm.Created.ToString("yyyy-MM-dd")</td>
                 <td class="buttons">
-                    @if (!access.IsLocked) {
-                    <a class="icon delete" href="@Url.Action("deleteaccess", new { id = access.Id })"></a>
+                    @if (!perm.IsLocked) {
+                    <a class="icon delete" href="@Url.Action("deleteaccess", new { id = perm.Id })"></a>
                     }
                 </td>
             </tr>
             }
         </tbody>
-        <tfoot>
-            <tr>
-                <td colspan="6"></td>
-            </tr>
-        </tfoot>
     </table>
 </div>

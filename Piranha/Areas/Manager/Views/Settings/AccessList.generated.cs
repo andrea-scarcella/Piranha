@@ -28,9 +28,9 @@ namespace Piranha.Areas.Manager.Views.Settings
     using System.Web.WebPages;
     using Piranha.Web;
     
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "1.5.4.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Areas/Manager/Views/Settings/AccessList.cshtml")]
-    public partial class AccessList : System.Web.Mvc.WebViewPage<Piranha.Models.Manager.SettingModels.AccessListModel>
+    public partial class AccessList : System.Web.Mvc.WebViewPage<Piranha.Manager.Models.PermissionListModel>
     {
         public AccessList()
         {
@@ -94,14 +94,14 @@ WriteLiteral(" id=\"add\"");
 
 WriteLiteral("><a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 728), Tuple.Create("\"", 756)
+WriteAttribute("href", Tuple.Create(" href=\"", 718), Tuple.Create("\"", 746)
             
             #line 24 "..\..\Areas\Manager\Views\Settings\AccessList.cshtml"
-, Tuple.Create(Tuple.Create("", 735), Tuple.Create<System.Object, System.Int32>(Url.Action("access")
+, Tuple.Create(Tuple.Create("", 725), Tuple.Create<System.Object, System.Int32>(Url.Action("access")
             
             #line default
             #line hidden
-, 735), false)
+, 725), false)
 );
 
 WriteLiteral(" class=\"add\"");
@@ -117,14 +117,14 @@ WriteLiteral(">");
             #line hidden
 WriteLiteral("</a></li>\r\n            <li><a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 835), Tuple.Create("\"", 867)
+WriteAttribute("href", Tuple.Create(" href=\"", 825), Tuple.Create("\"", 857)
             
             #line 25 "..\..\Areas\Manager\Views\Settings\AccessList.cshtml"
-, Tuple.Create(Tuple.Create("", 842), Tuple.Create<System.Object, System.Int32>(Url.Action("accesslist")
+, Tuple.Create(Tuple.Create("", 832), Tuple.Create<System.Object, System.Int32>(Url.Action("accesslist")
             
             #line default
             #line hidden
-, 842), false)
+, 832), false)
 );
 
 WriteLiteral(" class=\"refresh\"");
@@ -255,7 +255,7 @@ WriteLiteral(">\r\n");
             #line hidden
             
             #line 45 "..\..\Areas\Manager\Views\Settings\AccessList.cshtml"
-             foreach (var access in Model.Access) {
+             foreach (var perm in Model.Permissions) {
 
             
             #line default
@@ -266,21 +266,21 @@ WriteLiteral(" class=\"name\"");
 
 WriteLiteral("><a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 1828), Tuple.Create("\"", 1880)
+WriteAttribute("href", Tuple.Create(" href=\"", 1821), Tuple.Create("\"", 1871)
             
             #line 47 "..\..\Areas\Manager\Views\Settings\AccessList.cshtml"
-, Tuple.Create(Tuple.Create("", 1835), Tuple.Create<System.Object, System.Int32>(Url.Action("access", new { id = access.Id })
+, Tuple.Create(Tuple.Create("", 1828), Tuple.Create<System.Object, System.Int32>(Url.Action("access", new { id = perm.Id })
             
             #line default
             #line hidden
-, 1835), false)
+, 1828), false)
 );
 
 WriteLiteral(">");
 
             
             #line 47 "..\..\Areas\Manager\Views\Settings\AccessList.cshtml"
-                                                                                    Write(access.Function);
+                                                                                  Write(perm.Name);
 
             
             #line default
@@ -293,7 +293,7 @@ WriteLiteral(">");
 
             
             #line 48 "..\..\Areas\Manager\Views\Settings\AccessList.cshtml"
-                             Write(access.GroupName);
+                             Write(perm.GroupName);
 
             
             #line default
@@ -306,7 +306,7 @@ WriteLiteral(">");
 
             
             #line 49 "..\..\Areas\Manager\Views\Settings\AccessList.cshtml"
-                               Write(access.Updated.ToString("yyyy-MM-dd"));
+                               Write(perm.Updated.ToString("yyyy-MM-dd"));
 
             
             #line default
@@ -319,7 +319,7 @@ WriteLiteral(">");
 
             
             #line 50 "..\..\Areas\Manager\Views\Settings\AccessList.cshtml"
-                               Write(access.Created.ToString("yyyy-MM-dd"));
+                               Write(perm.Created.ToString("yyyy-MM-dd"));
 
             
             #line default
@@ -338,7 +338,7 @@ WriteLiteral(">\r\n");
             #line hidden
             
             #line 52 "..\..\Areas\Manager\Views\Settings\AccessList.cshtml"
-                     if (!access.IsLocked) {
+                     if (!perm.IsLocked) {
 
             
             #line default
@@ -347,14 +347,14 @@ WriteLiteral("                    <a");
 
 WriteLiteral(" class=\"icon delete\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 2255), Tuple.Create("\"", 2313)
+WriteAttribute("href", Tuple.Create(" href=\"", 2232), Tuple.Create("\"", 2288)
             
             #line 53 "..\..\Areas\Manager\Views\Settings\AccessList.cshtml"
-, Tuple.Create(Tuple.Create("", 2262), Tuple.Create<System.Object, System.Int32>(Url.Action("deleteaccess", new { id = access.Id })
+, Tuple.Create(Tuple.Create("", 2239), Tuple.Create<System.Object, System.Int32>(Url.Action("deleteaccess", new { id = perm.Id })
             
             #line default
             #line hidden
-, 2262), false)
+, 2239), false)
 );
 
 WriteLiteral("></a>\r\n");
@@ -375,11 +375,7 @@ WriteLiteral("                </td>\r\n            </tr>\r\n");
             
             #line default
             #line hidden
-WriteLiteral("        </tbody>\r\n        <tfoot>\r\n            <tr>\r\n                <td");
-
-WriteLiteral(" colspan=\"6\"");
-
-WriteLiteral("></td>\r\n            </tr>\r\n        </tfoot>\r\n    </table>\r\n</div>");
+WriteLiteral("        </tbody>\r\n    </table>\r\n</div>");
 
         }
     }

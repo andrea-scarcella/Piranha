@@ -41,6 +41,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper">
+      <HintPath>..\..\GitHub\tidyui\PiranhaCMS.org\packages\AutoMapper.2.2.1\lib\net40\AutoMapper.dll</HintPath>
+    </Reference>
     <Reference Include="dotless.Core">
       <HintPath>..\packages\dotless.1.3.1.0\lib\dotless.Core.dll</HintPath>
     </Reference>
@@ -48,6 +51,9 @@
       <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Ninject">
+      <HintPath>..\..\GitHub\tidyui\PiranhaCMS.org\packages\Ninject.3.0.1.10\lib\net45-full\Ninject.dll</HintPath>
+    </Reference>
     <Reference Include="RazorGenerator.Mvc">
       <HintPath>..\packages\RazorGenerator.Mvc.1.5.5.0\lib\net40\RazorGenerator.Mvc.dll</HintPath>
       <EmbedInteropTypes>False</EmbedInteropTypes>
@@ -151,6 +157,16 @@
     <Compile Include="Areas\Manager\Models\PostListModel.cs" />
     <Compile Include="Areas\Manager\Models\SiteTreeEditModel.cs" />
     <Compile Include="Areas\Manager\Models\SiteTreeListModel.cs" />
+    <Compile Include="Manager\Binders\UserEditModelBinder.cs" />
+    <Compile Include="Manager\Models\PermissionEditModel.cs" />
+    <Compile Include="Manager\Models\PermissionListModel.cs" />
+    <Compile Include="Manager\Models\UserEditModel.cs" />
+    <Compile Include="Manager\Models\UserListModel.cs" />
+    <Compile Include="Manager\Repositories\IPermissionRepository.cs" />
+    <Compile Include="Manager\Repositories\IUserRepository.cs" />
+    <Compile Include="Manager\Repositories\Mappings.cs" />
+    <Compile Include="Manager\Repositories\PermissionRepository.cs" />
+    <Compile Include="Manager\Repositories\UserRepository.cs" />
     <Compile Include="Areas\Manager\Views\Account\Index.generated.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -543,6 +559,7 @@
     <Compile Include="Extend\Regions\TextRegion.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="Manager\Binders\IExtensionBinder.cs" />
+    <Compile Include="Manager\InjectionModule.cs" />
     <Compile Include="Manager\ManagerModule.cs" />
     <Compile Include="Manager\ManagerRegistration.cs" />
     <Compile Include="Models\AccountModels.cs" />
@@ -563,14 +580,11 @@
     <Compile Include="Models\Manager\Placement.cs" />
     <Compile Include="Models\Manager\PostModels\EditModel.cs" />
     <Compile Include="Models\Manager\PostModels\InsertModel.cs" />
-    <Compile Include="Models\Manager\SettingModels\AccessEditModel.cs" />
-    <Compile Include="Models\Manager\SettingModels\AccessListModel.cs" />
     <Compile Include="Models\Manager\SettingModels\GroupEditModel.cs" />
     <Compile Include="Models\Manager\SettingModels\GroupListModel.cs" />
     <Compile Include="Models\Manager\SettingModels\ParamEditModel.cs" />
     <Compile Include="Models\Manager\SettingModels\ParamListModel.cs" />
     <Compile Include="Models\Manager\SettingModels\UserEditModel.cs" />
-    <Compile Include="Models\Manager\SettingModels\UserListModel.cs" />
     <Compile Include="Models\Manager\TemplateModels\PageEditModel.cs" />
     <Compile Include="Models\Manager\TemplateModels\PageListModel.cs" />
     <Compile Include="Models\Manager\TemplateModels\PostEditModel.cs" />

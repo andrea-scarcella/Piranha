@@ -11,7 +11,7 @@ using Piranha.Extend;
 
 namespace Piranha.Models.Manager.SettingModels
 {
-	public class UserEditModel
+	public class UserEditModelOld
 	{
 		#region Binder
 		public class Binder : DefaultModelBinder
@@ -23,7 +23,7 @@ namespace Piranha.Models.Manager.SettingModels
 			/// <param name="bindingContext">Binding context</param>
 			/// <returns>The page edit model</returns>
 			public override object BindModel(ControllerContext controllerContext, ModelBindingContext bindingContext) {
-				UserEditModel model = (UserEditModel)base.BindModel(controllerContext, bindingContext) ;
+				UserEditModelOld model = (UserEditModelOld)base.BindModel(controllerContext, bindingContext) ;
 
 				// Allow HtmlString extensions
 				model.Extensions.Each((i, m) => {
@@ -67,7 +67,7 @@ namespace Piranha.Models.Manager.SettingModels
 		/// <summary>
 		/// Default constructor. Creates a model.
 		/// </summary>
-		public UserEditModel() {
+		public UserEditModelOld() {
 			List<SysGroup> gr = SysGroup.GetFields("sysgroup_id, sysgroup_name", 
 				new Params() { OrderBy = "sysgroup_id" }) ;
 			groups = new List<SysGroup>() ;
@@ -89,8 +89,8 @@ namespace Piranha.Models.Manager.SettingModels
 		/// </summary>
 		/// <param name="id">The user id</param>
 		/// <returns>The model</returns>
-		public static UserEditModel GetById(Guid id) {
-			UserEditModel m = new UserEditModel() ;
+		public static UserEditModelOld GetById(Guid id) {
+			UserEditModelOld m = new UserEditModelOld() ;
 			m.User = SysUser.GetSingle(id) ;
 			m.Password = SysUserPassword.GetSingle(id) ;
 			m.Groups = new SelectList(m.groups, "Id", "Name", m.User.GroupId) ;

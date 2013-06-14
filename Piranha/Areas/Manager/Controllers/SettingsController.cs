@@ -4,10 +4,15 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
+using Ninject;
+
 using Piranha;
 using Piranha.Data;
 using Piranha.Models;
 using Piranha.Models.Manager.SettingModels;
+
+using Piranha.Manager.Models;
+using Piranha.Manager.Repositories;
 
 namespace Piranha.Areas.Manager.Controllers
 {
@@ -15,7 +20,29 @@ namespace Piranha.Areas.Manager.Controllers
 	/// Settings controller for the manager area.
 	/// </summary>
     public class SettingsController : ManagerController
-    {
+	{
+		#region Members
+		private readonly IUserRepository UserRepository = null ;
+		private readonly IPermissionRepository PermissionRepository = null ;
+		#endregion
+
+		/// <summary>
+		/// Default constructor.
+		/// </summary>
+		public SettingsController() : this(
+			Application.Current.Kernel.Get<IUserRepository>(),
+			Application.Current.Kernel.Get<IPermissionRepository>()) {}
+
+		/// <summary>
+		/// Creates settings controller with the given repositories.
+		/// </summary>
+		/// <param name="userRep">The user repository</param>
+		/// <param name="permRep">The permission repository</param>
+		public SettingsController(IUserRepository userRep, IPermissionRepository permRep) : base() {
+			UserRepository = userRep ;
+			PermissionRepository = permRep ;
+		}
+
 		#region User actions
 		/// <summary>
 		/// Gets the list of all users.
@@ -23,14 +50,15 @@ namespace Piranha.Areas.Manager.Controllers
 		/// <returns></returns>
 		[Access(Function="ADMIN_USER")]
 		public ActionResult UserList() {
-			var m = UserListModel.Get() ;
 			ViewBag.Title = @Piranha.Resources.Settings.ListTitleUsers ;
 
-			// Executes the user list loaded hook, if registered
-			if (WebPages.Hooks.Manager.UserListModelLoaded != null)
-				WebPages.Hooks.Manager.UserListModelLoaded(this, WebPages.Manager.GetActiveMenuItem(), m) ;
+			var model = UserRepository.GetAll() ;
 
-            return View(@"~/Areas/Manager/Views/Settings/UserList.cshtml", m);
+			// TODO: Executes the user list loaded hook, if registered
+			if (WebPages.Hooks.Manager.UserListModelLoaded != null)
+				WebPages.Hooks.Manager.UserListModelLoaded(this, WebPages.Manager.GetActiveMenuItem(), model) ;
+
+            return View(@"~/Areas/Manager/Views/Settings/UserList.cshtml", model);
 		}
 
 		/// <summary>
@@ -39,20 +67,20 @@ namespace Piranha.Areas.Manager.Controllers
 		/// <param name="id">The user id</param>
 		[Access(Function="ADMIN_USER")]
 		public new ActionResult User(string id) {
-			var m = new UserEditModel() ;
+			var model = UserRepository.Create() ;
 
 			if (!String.IsNullOrEmpty(id)) {
 				ViewBag.Title = Piranha.Resources.Settings.EditTitleExistingUser ;
-				m = UserEditModel.GetById(new Guid(id)) ;
+				model = UserRepository.GetById(new Guid(id)) ;
 			} else {
 				ViewBag.Title = Piranha.Resources.Settings.EditTitleNewUser ;
 			}
 
-			// Executes the user list loaded hook, if registered
+			// TODO: Executes the user list loaded hook, if registered
 			if (WebPages.Hooks.Manager.UserEditModelLoaded != null)
-				WebPages.Hooks.Manager.UserEditModelLoaded(this, WebPages.Manager.GetActiveMenuItem(), m) ;
+				WebPages.Hooks.Manager.UserEditModelLoaded(this, WebPages.Manager.GetActiveMenuItem(), model) ;
 	
-			return View(@"~/Areas/Manager/Views/Settings/User.cshtml", m) ;
+			return View(@"~/Areas/Manager/Views/Settings/User.cshtml", model) ;
 		}
 
 		/// <summary>
@@ -61,23 +89,19 @@ namespace Piranha.Areas.Manager.Controllers
 		/// <param name="em">The model</param>
 		[HttpPost(), ValidateInput(false)]
 		[Access(Function="ADMIN_USER")]
-		public new ActionResult User(UserEditModel um) {
-			if (um.User.IsNew)
-				ViewBag.Title = Piranha.Resources.Settings.EditTitleNewUser ;
-			else ViewBag.Title = Piranha.Resources.Settings.EditTitleExistingUser ;
+		public new ActionResult User(UserEditModel m) {
+			ViewBag.Title = Piranha.Resources.Settings.EditTitleExistingUser ;
 
 			if (ModelState.IsValid) {
 				try {
-					if (um.SaveAll()) {
-						ModelState.Clear() ;
-						ViewBag.Title = Piranha.Resources.Settings.EditTitleExistingUser ;
-						SuccessMessage(Piranha.Resources.Settings.MessageUserSaved) ;
-					} else ErrorMessage(Piranha.Resources.Settings.MessageUserNotSaved) ;
-				} catch (Exception e) {
-					ErrorMessage(e.ToString()) ;
+					UserRepository.Save(m) ;
+					SuccessMessage(Piranha.Resources.Settings.MessageUserSaved, true) ;
+					return RedirectToAction("user", new { id = m.Id }) ;
+				} catch {
+					ErrorMessage(Piranha.Resources.Settings.MessageUserNotSaved) ;
 				}
 			}
-			return View(@"~/Areas/Manager/Views/Settings/User.cshtml", um) ;
+			return View(@"~/Areas/Manager/Views/Settings/User.cshtml", m) ;
 		}
 
 		/// <summary>
@@ -86,14 +110,16 @@ namespace Piranha.Areas.Manager.Controllers
 		/// <param name="id">The user id</param>
 		[Access(Function="ADMIN_USER")]
 		public ActionResult DeleteUser(string id) {
-			UserEditModel um = UserEditModel.GetById(new Guid(id)) ;
-			
-			ViewBag.SelectedTab = "users" ;
-			if (um.DeleteAll())
-				SuccessMessage(Piranha.Resources.Settings.MessageUserDeleted) ;
-			else ErrorMessage(Piranha.Resources.Settings.MessageUserNotDeleted) ;
-			
-			return UserList() ;
+			var model = UserRepository.GetById(new Guid(id)) ;
+
+			try {
+				if (UserRepository.Delete(model))
+					SuccessMessage(Piranha.Resources.Settings.MessageUserDeleted, true) ;
+				else ErrorMessage(Piranha.Resources.Settings.MessageUserNotDeleted, true) ;
+			} catch {
+				ErrorMessage(Piranha.Resources.Settings.MessageUserNotDeleted, true) ;
+			}
+			return RedirectToAction("userlist") ;
 		}
 
 		/// <summary>
@@ -180,13 +206,15 @@ namespace Piranha.Areas.Manager.Controllers
 		}
 		#endregion
 
-		#region Access actions
+		#region Permission actions
 		/// <summary>
 		/// Gets the access list.
 		/// </summary>
 		[Access(Function="ADMIN_ACCESS")]
         public ActionResult AccessList() {
-            return View(@"~/Areas/Manager/Views/Settings/AccessList.cshtml", AccessListModel.Get());
+			var model = PermissionRepository.GetAll() ;
+
+            return View(@"~/Areas/Manager/Views/Settings/AccessList.cshtml", model);
         }
 
 		/// <summary>
@@ -195,13 +223,15 @@ namespace Piranha.Areas.Manager.Controllers
 		/// <param name="id">The group id</param>
 		[Access(Function="ADMIN_ACCESS")]
 		public ActionResult Access(string id) {
+			var model = PermissionRepository.Create() ;
+
 			if (!String.IsNullOrEmpty(id)) {
 				ViewBag.Title = Piranha.Resources.Settings.EditTitleExistingAccess ;
-				return View(@"~/Areas/Manager/Views/Settings/Access.cshtml", AccessEditModel.GetById(new Guid(id))) ;
+				model = PermissionRepository.GetById(new Guid(id)) ;
 			} else {
 				ViewBag.Title = Piranha.Resources.Settings.EditTitleNewAccess ;
-				return View(@"~/Areas/Manager/Views/Settings/Access.cshtml", new AccessEditModel()) ;
 			}
+			return View(@"~/Areas/Manager/Views/Settings/Access.cshtml", model) ;
 		}
 
 		/// <summary>
@@ -210,23 +240,19 @@ namespace Piranha.Areas.Manager.Controllers
 		/// <param name="gd">The model</param>
 		[HttpPost()]
 		[Access(Function="ADMIN_ACCESS")]
-		public ActionResult Access(AccessEditModel am) {
-			if (am.Access.IsNew)
-				ViewBag.Title = Piranha.Resources.Settings.EditTitleNewAccess ;
-			else ViewBag.Title = Piranha.Resources.Settings.EditTitleExistingAccess ;
+		public ActionResult Access(PermissionEditModel m) {
+			ViewBag.Title = Piranha.Resources.Settings.EditTitleExistingAccess ;
 
 			if (ModelState.IsValid) {
 				try {
-					if (am.SaveAll()) {
-						ModelState.Clear() ;
-						ViewBag.Title = Piranha.Resources.Settings.EditTitleExistingAccess ;
-						SuccessMessage(Piranha.Resources.Settings.MessageAccessSaved) ;
-					} else ErrorMessage(Piranha.Resources.Settings.MessageAccessNotSaved) ;
-				} catch (Exception e) {
-					ErrorMessage(e.ToString()) ;
+					PermissionRepository.Save(m) ;
+					SuccessMessage(Piranha.Resources.Settings.MessageAccessSaved, true) ;
+					return RedirectToAction("access", new { id = m.Id }) ;
+				} catch {
+					ErrorMessage(Piranha.Resources.Settings.MessageAccessNotSaved) ;
 				}
 			}
-			return View(@"~/Areas/Manager/Views/Settings/Access.cshtml", am) ;
+			return View(@"~/Areas/Manager/Views/Settings/Access.cshtml", m) ;
 		}
 
 		/// <summary>
@@ -235,14 +261,16 @@ namespace Piranha.Areas.Manager.Controllers
 		/// <param name="id">The access id</param>
 		[Access(Function="ADMIN_ACCESS")]
 		public ActionResult DeleteAccess(string id) {
-			AccessEditModel am = AccessEditModel.GetById(new Guid(id)) ;
-			
-			ViewBag.SelectedTab = "access" ;
-			if (am.DeleteAll())
-				SuccessMessage(Piranha.Resources.Settings.MessageAccessDeleted) ;
-			else ErrorMessage(Piranha.Resources.Settings.MessageAccessNotDeleted) ;
+			var model = PermissionRepository.GetById(new Guid(id)) ;
 
-			return AccessList() ;
+			try {
+				if (PermissionRepository.Delete(model))
+					SuccessMessage(Piranha.Resources.Settings.MessageAccessDeleted, true) ;
+				else ErrorMessage(Piranha.Resources.Settings.MessageAccessNotDeleted, true) ;
+			} catch {
+				ErrorMessage(Piranha.Resources.Settings.MessageAccessNotDeleted, true) ;
+			}
+			return RedirectToAction("accesslist") ;
 		}
 		#endregion
 

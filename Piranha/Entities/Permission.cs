@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace Piranha.Entities
 {
@@ -38,6 +39,31 @@ namespace Piranha.Entities
 		/// Gets/sets the group attached to the permission.
 		/// </summary>
 		public Group Group { get ; set ; }
+		#endregion
+
+		#region Events
+		/// <summary>
+		/// Executed before the permission is saved.
+		/// </summary>
+		/// <param name="db">The current context</param>
+		/// <param name="state">The entity state</param>
+		public override void OnSave(DataContext db, System.Data.EntityState state) {
+			// Validate the permission name
+			ValidateName() ;
+
+			// Go ahead and save
+			base.OnSave(db, state);
+		}
+		#endregion
+
+		#region Private methods
+		/// <summary>
+		/// Validates the name before saving.
+		/// </summary>
+		private void ValidateName() {
+			Name = Regex.Replace(Name.ToUpper().Replace(" ", "_").Replace("Å", "A").Replace("Ä", "A").Replace("Ö", "O"),
+				@"[^A-Z0-9_/]", "").Replace("__", "_") ;
+		}
 		#endregion
 	}
 }

@@ -48,6 +48,9 @@ namespace Piranha.Manager
 			// Register json deserialization for post data
 			ValueProviderFactories.Factories.Add(new JsonValueProviderFactory());
 
+			// Initialize repository mappings
+			Repositories.Mappings.Init() ;
+
 			// Register application part
 			ApplicationPart.Register(new ApplicationPart(typeof(ManagerModule).Assembly, "~/")) ;
 		}
@@ -72,9 +75,8 @@ namespace Piranha.Manager
 			if (ModelBinders.Binders[typeof(Piranha.Models.Manager.CategoryModels.EditModel)] == null)
 				ModelBinders.Binders.Add(typeof(Piranha.Models.Manager.CategoryModels.EditModel),
 					new Piranha.Models.Manager.CategoryModels.EditModel.Binder()) ;
-			if (ModelBinders.Binders[typeof(Piranha.Models.Manager.SettingModels.UserEditModel)] == null)
-				ModelBinders.Binders.Add(typeof(Piranha.Models.Manager.SettingModels.UserEditModel),
-					new Piranha.Models.Manager.SettingModels.UserEditModel.Binder()) ;
+			if (ModelBinders.Binders[typeof(Models.UserEditModel)] == null)
+				ModelBinders.Binders.Add(typeof(Models.UserEditModel), new Binders.UserEditModelBinder()) ;
 			if (ModelBinders.Binders[typeof(Piranha.Models.Manager.ContentModels.EditModel)] == null)
 				ModelBinders.Binders.Add(typeof(Piranha.Models.Manager.ContentModels.EditModel),
 					new Piranha.Models.Manager.ContentModels.EditModel.Binder()) ;

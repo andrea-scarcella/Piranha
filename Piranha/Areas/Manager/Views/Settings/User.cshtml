@@ -1,13 +1,13 @@
-﻿@model Piranha.Models.Manager.SettingModels.UserEditModel
+﻿@model Piranha.Manager.Models.UserEditModel
 @section Toolbar {
 @Html.Partial("Partial/Tabs")
 <div class="toolbar">
     <div class="inner">
         <ul>
             <li><a class="save submit">@Piranha.Resources.Global.ToolbarSave</a></li>
-            <li><a href="@Url.Action("deleteuser", new { id = Model.User.Id })" class="delete">@Piranha.Resources.Global.ToolbarDelete</a></li>
+            <li><a href="@Url.Action("deleteuser", new { id = Model.Id })" class="delete">@Piranha.Resources.Global.ToolbarDelete</a></li>
             <li><a href="@Url.Action("userlist")" class="back">@Piranha.Resources.Global.ToolbarBack</a></li>
-            <li><a href="@Url.Action("user", new { id = Model.User.Id })" class="refresh">@Piranha.Resources.Global.ToolbarReload</a></li>
+            <li><a href="@Url.Action("user", new { id = Model.Id })" class="refresh">@Piranha.Resources.Global.ToolbarReload</a></li>
         </ul>
         <div class="clear"></div>
     </div>
@@ -41,45 +41,40 @@
     </script>
 }
 @{ Html.BeginForm() ; }
-@Html.HiddenFor(m => m.User.Id)
-@Html.HiddenFor(m => m.User.IsNew)
-@Html.HiddenFor(m => m.User.Created)
-@Html.HiddenFor(m => m.User.CreatedBy)
-@Html.HiddenFor(m => m.Password.Id)
-@Html.HiddenFor(m => m.Password.IsNew)
+@Html.HiddenFor(m => m.Id)
 <div class="grid_9">
     <div class="box">
         <div class="title"><h2>@Piranha.Resources.Settings.UserInfo</h2></div>
         <div class="inner">
             <ul class="form">
                 <li>
-                    @Html.LabelFor(m => m.User.Login)
+                    @Html.LabelFor(m => m.Login, Piranha.Resources.Settings.Login)
                     <div class="input">
-                        @Html.TextBoxFor(m => m.User.Login)</div>
-                    @Html.ValidationMessageFor(m => m.User.Login)
+                        @Html.TextBoxFor(m => m.Login)</div>
+                    @Html.ValidationMessageFor(m => m.Login)
                 </li>
                 <li>
-                    @Html.LabelFor(m => m.User.Firstname)
+                    @Html.LabelFor(m => m.Firstname, Piranha.Resources.Settings.Firstname)
                     <div class="input">
-                        @Html.TextBoxFor(m => m.User.Firstname)</div>
-                    @Html.ValidationMessageFor(m => m.User.Firstname)
+                        @Html.TextBoxFor(m => m.Firstname)</div>
+                    @Html.ValidationMessageFor(m => m.Firstname)
                 </li>
                 <li>
-                    @Html.LabelFor(m => m.User.Surname)
+                    @Html.LabelFor(m => m.Surname, Piranha.Resources.Settings.Surname)
                     <div class="input">
-                        @Html.TextBoxFor(m => m.User.Surname)</div>
-                    @Html.ValidationMessageFor(m => m.User.Surname)
+                        @Html.TextBoxFor(m => m.Surname)</div>
+                    @Html.ValidationMessageFor(m => m.Surname)
                 </li>
                 <li>
-                    @Html.LabelFor(m => m.User.Email)
+                    @Html.LabelFor(m => m.Email, Piranha.Resources.Settings.Email)
                     <div class="input">
-                        @Html.TextBoxFor(m => m.User.Email)</div>
-                    @Html.ValidationMessageFor(m => m.User.Email)
+                        @Html.TextBoxFor(m => m.Email)</div>
+                    @Html.ValidationMessageFor(m => m.Email)
                 </li>
                 <li>
-                    @Html.LabelFor(m => m.User.GroupId)
+                    @Html.LabelFor(m => m.GroupId, Piranha.Resources.Global.Group)
                     <div class="input">
-                        @Html.DropDownListFor(m => m.User.GroupId, Model.Groups)</div>
+                        @Html.DropDownListFor(m => m.GroupId, new SelectList(Model.UserGroups, "Id", "Name", Model.GroupId))
                 </li>
             </ul>
         </div>
@@ -88,12 +83,12 @@
         <div class="title"><h2>@Piranha.Resources.Settings.Account</h2></div>
         <div class="inner">
             <ul class="form">
-                <li>@Html.LabelFor(m => m.User.IsLocked)
-                    <p>@Html.CheckBoxFor(m => m.User.IsLocked) (@Piranha.Resources.Settings.LockedInfo)</p>
+                <li>@Html.LabelFor(m => m.IsLocked, Piranha.Resources.Settings.Locked)
+                    <p>@Html.CheckBoxFor(m => m.IsLocked) (@Piranha.Resources.Settings.LockedInfo)</p>
                 </li>
-                <li>@Html.LabelFor(m => m.User.LockedUntil)
+                <li>@Html.LabelFor(m => m.LockedUntil, Piranha.Resources.Settings.LockedUntil)
                     <div class="input datepicker">
-                        @Html.EditorFor(m => m.User.LockedUntil)</div>
+                        @Html.EditorFor(m => m.LockedUntil)</div>
                 </li>
             </ul>
         </div>
@@ -104,22 +99,21 @@
 </div>
 <div class="grid_3">
     <div class="box">
-        <div class="title"><h2>@(Model.User.IsNew ? @Piranha.Resources.Settings.CreatePassword : @Piranha.Resources.Settings.ChangePassword)</h2></div>
+        <div class="title"><h2>@Piranha.Resources.Settings.ChangePassword</h2></div>
         <div class="inner">
             <ul class="form">
                 <li>
-                    @Html.LabelFor(m => m.Password.Password)
+                    @Html.LabelFor(m => m.Password, Piranha.Resources.Global.Password)
                     <div class="input">
-                        @Html.PasswordFor(m => m.Password.Password)</div>
+                        @Html.PasswordFor(m => m.Password)</div>
                 </li>
                 <li>
-                    @Html.LabelFor(m => m.Password.PasswordConfirm)
+                    @Html.LabelFor(m => m.PasswordConfirm, Piranha.Resources.Global.Confirm)
                     <div class="input">
-                        @Html.PasswordFor(m => m.Password.PasswordConfirm)</div>
-                    @Html.ValidationMessageFor(m => m.Password.PasswordConfirm)
+                        @Html.PasswordFor(m => m.PasswordConfirm)</div>
+                    @Html.ValidationMessageFor(m => m.PasswordConfirm)
                 </li>
             </ul>
-            <a href="@Url.Action("generatepassword", "settings", new { @id = Model.Password.Id })" class="btn orange hidden">Generera lösenord</a>
         </div>
     </div>
 </div>
