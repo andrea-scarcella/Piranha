@@ -51,9 +51,6 @@
       <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Ninject">
-      <HintPath>..\..\GitHub\tidyui\PiranhaCMS.org\packages\Ninject.3.0.1.10\lib\net45-full\Ninject.dll</HintPath>
-    </Reference>
     <Reference Include="RazorGenerator.Mvc">
       <HintPath>..\packages\RazorGenerator.Mvc.1.5.5.0\lib\net40\RazorGenerator.Mvc.dll</HintPath>
       <EmbedInteropTypes>False</EmbedInteropTypes>
@@ -559,7 +556,6 @@
     <Compile Include="Extend\Regions\TextRegion.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="Manager\Binders\IExtensionBinder.cs" />
-    <Compile Include="Manager\InjectionModule.cs" />
     <Compile Include="Manager\ManagerModule.cs" />
     <Compile Include="Manager\ManagerRegistration.cs" />
     <Compile Include="Models\AccountModels.cs" />

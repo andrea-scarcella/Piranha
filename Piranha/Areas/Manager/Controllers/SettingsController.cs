@@ -4,8 +4,6 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-using Ninject;
-
 using Piranha;
 using Piranha.Data;
 using Piranha.Models;
@@ -29,9 +27,7 @@ namespace Piranha.Areas.Manager.Controllers
 		/// <summary>
 		/// Default constructor.
 		/// </summary>
-		public SettingsController() : this(
-			Application.Current.Kernel.Get<IUserRepository>(),
-			Application.Current.Kernel.Get<IPermissionRepository>()) {}
+		public SettingsController() : this(new UserRepository(), new PermissionRepository()) {}
 
 		/// <summary>
 		/// Creates settings controller with the given repositories.
