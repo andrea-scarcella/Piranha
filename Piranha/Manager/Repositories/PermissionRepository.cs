@@ -33,11 +33,20 @@ namespace Piranha.Manager.Repositories
 			var m = new Models.PermissionEditModel() {
 				Id = Guid.NewGuid()
 			} ;
+			LoadMetaData(m) ;
 
-			using (var db = new DataContext()) {
-				m.PermissionGroups = db.Groups.OrderBy(g => g.Name).Select(g => new Models.PermissionEditModel.PermissionGroup() { Id = g.Id, Name = g.Name }).ToList() ;
-			}
 			return m ;
+		}
+
+		/// <summary>
+		/// Refreshes the given model.
+		/// </summary>
+		/// <param name="model">The model</param>
+		/// <returns>The refreshed model</returns>
+		public Models.PermissionEditModel Refresh(Models.PermissionEditModel model) {
+			LoadMetaData(model) ;
+
+			return model ;
 		}
 
 		/// <summary>
@@ -85,5 +94,17 @@ namespace Piranha.Manager.Repositories
 				return db.SaveChanges() > 0 ;
 			}
 		}
+
+		#region Private methods
+		/// <summary>
+		/// Loads all meta data for the model.
+		/// </summary>
+		/// <param name="model">The model</param>
+		private void LoadMetaData(Models.PermissionEditModel model) {
+			using (var db = new DataContext()) {
+				model.PermissionGroups = db.Groups.OrderBy(g => g.Name).Select(g => new Models.PermissionEditModel.PermissionGroup() { Id = g.Id, Name = g.Name }).ToList() ;
+			}
+		}
+		#endregion
 	}
 }

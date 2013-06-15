@@ -97,7 +97,7 @@ namespace Piranha.Areas.Manager.Controllers
 					ErrorMessage(Piranha.Resources.Settings.MessageUserNotSaved) ;
 				}
 			}
-			return View(@"~/Areas/Manager/Views/Settings/User.cshtml", m) ;
+			return View(@"~/Areas/Manager/Views/Settings/User.cshtml", UserRepository.Refresh(m)) ;
 		}
 
 		/// <summary>
@@ -248,7 +248,7 @@ namespace Piranha.Areas.Manager.Controllers
 					ErrorMessage(Piranha.Resources.Settings.MessageAccessNotSaved) ;
 				}
 			}
-			return View(@"~/Areas/Manager/Views/Settings/Access.cshtml", m) ;
+			return View(@"~/Areas/Manager/Views/Settings/Access.cshtml", PermissionRepository.Refresh(m)) ;
 		}
 
 		/// <summary>

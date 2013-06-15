@@ -20,6 +20,13 @@ namespace Piranha.Manager.Repositories
 		Models.UserEditModel Create() ;
 
 		/// <summary>
+		/// Refreshes the given model.
+		/// </summary>
+		/// <param name="model">The model</param>
+		/// <returns>The refreshed model</returns>
+		Models.UserEditModel Refresh(Models.UserEditModel model) ;
+
+		/// <summary>
 		/// Gets the edit model for the user with the given id.
 		/// </summary>
 		/// <param name="id">The user id</param>

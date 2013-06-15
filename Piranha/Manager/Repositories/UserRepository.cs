@@ -47,10 +47,8 @@ namespace Piranha.Manager.Repositories
 			var m = new Models.UserEditModel() {
 				Id = Guid.NewGuid()
 			} ;
+			LoadMetaData(m) ;
 
-			using (var db = new DataContext()) {
-				m.UserGroups = db.Groups.OrderBy(g => g.Name).Select(g => new Models.UserEditModel.UserGroup() { Id = g.Id, Name = g.Name }).ToList() ;
-			}
 			return m ;
 		}
 
@@ -64,6 +62,17 @@ namespace Piranha.Manager.Repositories
 				return Mapper.Map<Entities.User, Models.UserEditModel>(
 					db.Users.Where(u => u.Id == id).Single(), Create()) ;
 			}
+		}
+
+		/// <summary>
+		/// Refreshes the given model.
+		/// </summary>
+		/// <param name="model">The model</param>
+		/// <returns>The refreshed model</returns>
+		public Models.UserEditModel Refresh(Models.UserEditModel model) {
+			LoadMetaData(model) ;
+
+			return model ;
 		}
 
 		/// <summary>
@@ -104,6 +113,16 @@ namespace Piranha.Manager.Repositories
 		}
 
 		#region Private methods
+		/// <summary>
+		/// Loads all meta data for the model.
+		/// </summary>
+		/// <param name="model">The model</param>
+		private void LoadMetaData(Models.UserEditModel model) {
+			using (var db = new DataContext()) {
+				model.UserGroups = db.Groups.OrderBy(g => g.Name).Select(g => new Models.UserEditModel.UserGroup() { Id = g.Id, Name = g.Name }).ToList() ;
+			}
+		}
+
 		/// <summary>
 		/// Generates the gravatar url for the given email.
 		/// </summary>
