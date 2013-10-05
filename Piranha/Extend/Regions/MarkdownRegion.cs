@@ -63,7 +63,7 @@ namespace Piranha.Extend.Regions
 		public virtual object GetContent(object model) {
 			var md = new MarkdownSharp.Markdown() ;
 
-			return new HtmlString(md.Transform(this.ToString())) ;
+			return new HtmlString(md.Transform(ToString())) ;
 		}
 	}
 }
